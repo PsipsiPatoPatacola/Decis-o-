@@ -15,22 +15,22 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ffe1e8, #e8dfff);
+  background: linear-gradient(135deg, #4b246e, #24113d);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
-  color: #4b244a;
+  color: #ffffff;
 }
 
 .container {
   width: 90%;
   max-width: 500px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(35, 18, 53, 0.95);
   padding: 30px 22px;
   border-radius: 25px;
   text-align: center;
-  box-shadow: 0 10px 35px #a66c9b33;
+  box-shadow: 0 10px 35px #00000055;
   margin: 30px 0;
 }
 
@@ -58,48 +58,51 @@ p {
 
 .opcao:hover {
   transform: scale(1.03);
-  box-shadow: 0 5px 15px #00000015;
+  box-shadow: 0 5px 15px #00000030;
 }
 
 .a {
-  background: #ff8fa3;
-  color: white;
+  background: #b57aff;
+  color: #24113d;
 }
 
 .b {
-  background: #b39ddb;
+  background: #7c4dff;
   color: white;
 }
 
 .c {
-  background: #f4b6c2;
-  color: #572d46;
-  position: fixed;
+  background: #000000;
+  color: white;
+  position: relative;
+  width: 100%;
+  margin: 15px 0 0;
+  transform: none;
   z-index: 10;
-  width: auto;
-  max-width: 80vw;
-  left: 50%;
-  top: 85%;
-  transform: translate(-50%, -50%);
-  margin: 0;
 }
 
 .c:hover {
-  transform: translate(-50%, -50%);
+  transform: none;
 }
 
 #resultado {
   display: none;
   margin-top: 20px;
   padding: 20px;
-  background: #fff0f5;
+  background: #3d2058;
   border-radius: 15px;
   animation: aparecer 0.5s ease;
 }
 
 @keyframes aparecer {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .balao {
@@ -150,7 +153,7 @@ p {
   display: none;
   position: fixed;
   inset: 0;
-  background: #00000066;
+  background: #00000099;
   z-index: 30;
   align-items: center;
   justify-content: center;
@@ -158,7 +161,8 @@ p {
 }
 
 .modal-conteudo {
-  background: white;
+  background: #2b1742;
+  border: 1px solid #7c4dff;
   border-radius: 20px;
   padding: 30px 20px;
   width: 100%;
@@ -168,7 +172,7 @@ p {
 }
 
 .modal-conteudo h2 {
-  color: #754c8a;
+  color: #d4b5ff;
 }
 
 .botoes-modal {
@@ -187,13 +191,13 @@ p {
 }
 
 .sim {
-  background: #b39ddb;
+  background: #7c4dff;
   color: white;
 }
 
 .nao {
-  background: #eee;
-  color: #444;
+  background: #eeeeee;
+  color: #333333;
 }
 
 #mensagemFinal {
@@ -201,15 +205,19 @@ p {
   margin-top: 20px;
   font-weight: bold;
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="container">
+
   <h1>Uma decisão para nós ❤️</h1>
-  <p>Quero que você escolha com carinho o que realmente deseja para nós.</p>
+
+  <p>
+    Quero que você escolha com carinho
+    o que realmente deseja para nós.
+  </p>
 
   <button class="opcao a" onclick="escolherA()">
     Opção A — Continuar como estamos e fazermos planos juntos pra João Pessoa.
@@ -219,31 +227,44 @@ p {
     Opção B — Eu voltar pra CG-MS.
   </button>
 
+  <button class="opcao c" id="botaoC">
+    Opção C — Terminar de vez.
+  </button>
+
   <div id="resultado">
     <h2>❤️</h2>
     <p>Então vamos continuar escrevendo nossa história juntos!</p>
     <p>João Pessoa nos espera!</p>
   </div>
+
 </div>
 
-<button class="opcao c" id="botaoC">
-  Opção C — Terminar de vez.
-</button>
-
 <div class="modal" id="modal">
+
   <div class="modal-conteudo">
+
     <h2 id="pergunta">Tem certeza?</h2>
-    <p id="textoModal">Pense com carinho nessa escolha.</p>
+
+    <p id="textoModal">Tem certeza disso?</p>
 
     <div class="botoes-modal">
-      <button class="sim" onclick="confirmarB()">Sim</button>
-      <button class="nao" onclick="fecharB()">Não</button>
+
+      <button class="sim" onclick="confirmarB()">
+        Sim
+      </button>
+
+      <button class="nao" onclick="fecharB()">
+        Não
+      </button>
+
     </div>
 
     <p id="mensagemFinal">
       Você confirmou sua escolha. ❤️
     </p>
+
   </div>
+
 </div>
 
 <script>
@@ -252,7 +273,9 @@ let audioContext;
 
 function iniciarAudio() {
   if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    audioContext = new (
+      window.AudioContext || window.webkitAudioContext
+    )();
   }
 
   if (audioContext.state === "suspended") {
@@ -274,6 +297,7 @@ function tocarNota(frequencia, duracao, volume = 0.15) {
   ganho.connect(audioContext.destination);
 
   oscilador.start();
+
   ganho.gain.exponentialRampToValueAtTime(
     0.001,
     audioContext.currentTime + duracao
@@ -301,9 +325,17 @@ function criarBalao() {
   const balao = document.createElement("div");
   balao.className = "balao";
 
-  const cores = ["#ff6b81", "#ffd166", "#a0c4ff", "#cdb4db", "#80ed99"];
+  const cores = [
+    "#ff6b81",
+    "#ffd166",
+    "#a0c4ff",
+    "#cdb4db",
+    "#80ed99"
+  ];
 
-  balao.style.background = cores[Math.floor(Math.random() * cores.length)];
+  balao.style.background =
+    cores[Math.floor(Math.random() * cores.length)];
+
   balao.style.left = Math.random() * 100 + "vw";
 
   document.body.appendChild(balao);
@@ -315,9 +347,16 @@ function criarConfete() {
   const confete = document.createElement("div");
   confete.className = "confete";
 
-  const cores = ["#ff6b81", "#ffd166", "#a0c4ff", "#cdb4db"];
+  const cores = [
+    "#ff6b81",
+    "#ffd166",
+    "#a0c4ff",
+    "#cdb4db"
+  ];
 
-  confete.style.background = cores[Math.floor(Math.random() * cores.length)];
+  confete.style.background =
+    cores[Math.floor(Math.random() * cores.length)];
+
   confete.style.left = Math.random() * 100 + "vw";
 
   document.body.appendChild(confete);
@@ -328,43 +367,61 @@ function criarConfete() {
 function abrirB() {
   iniciarAudio();
 
-  // Piano grave e dramático
+  // Som grave de piano
   tocarNota(130.81, 1.2, 0.25);
 
   document.getElementById("modal").style.display = "flex";
-  document.getElementById("pergunta").textContent = "Tem certeza?";
-  document.getElementById("textoModal").textContent = "Pense com carinho nessa escolha.";
-  document.getElementById("mensagemFinal").style.display = "none";
+
+  document.getElementById("pergunta").textContent =
+    "Tem certeza?";
+
+  document.getElementById("textoModal").textContent =
+    "Tem certeza disso?";
+
+  document.getElementById("mensagemFinal").style.display =
+    "none";
+
+  document.querySelector(".botoes-modal").style.display =
+    "flex";
 
   etapa = 1;
 }
 
 function confirmarB() {
   if (etapa === 1) {
+
     tocarNota(98, 1.2, 0.25);
 
     document.getElementById("pergunta").textContent =
       "Você confirma essa opção mesmo?";
 
     document.getElementById("textoModal").textContent =
-      "Essa é realmente a sua decisão?";
+      "Tem certeza disso?";
 
     etapa = 2;
+
   } else {
+
     document.getElementById("pergunta").textContent =
       "Escolha confirmada.";
 
-    document.getElementById("textoModal").textContent = "";
+    document.getElementById("textoModal").textContent =
+      "";
 
-    document.querySelector(".botoes-modal").style.display = "none";
+    document.querySelector(".botoes-modal").style.display =
+      "none";
 
-    document.getElementById("mensagemFinal").style.display = "block";
+    document.getElementById("mensagemFinal").style.display =
+      "block";
+
   }
 }
 
 function fecharB() {
   document.getElementById("modal").style.display = "none";
-  document.querySelector(".botoes-modal").style.display = "flex";
+
+  document.querySelector(".botoes-modal").style.display =
+    "flex";
 }
 
 const botaoC = document.getElementById("botaoC");
@@ -378,9 +435,13 @@ function fugir() {
 
   const margem = 10;
 
-  const x = margem + Math.random() * (largura - larguraBotao - margem * 2);
-  const y = margem + Math.random() * (altura - alturaBotao - margem * 2);
+  const x = margem + Math.random() *
+    (largura - larguraBotao - margem * 2);
 
+  const y = margem + Math.random() *
+    (altura - alturaBotao - margem * 2);
+
+  botaoC.style.position = "fixed";
   botaoC.style.left = x + "px";
   botaoC.style.top = y + "px";
   botaoC.style.transform = "none";
